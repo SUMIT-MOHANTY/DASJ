@@ -1,23 +1,13 @@
-## Environment Setup
-Copy `.env.example` to `.env` and replace the placeholder values with your real Azure credentials.
-Keep `.env` out of version control.
+# Project Overview
 
-## Monitoring
+This repository contains a FastAPI backend and a React (CRA) frontend.
 
-- [Monitoring Runbook](docs/monitoring_runbook.md)
-- GitHub Actions workflow: `.github/workflows/monitoring.yml`
-- Scripts located in `scripts/monitoring/`
-- Optional Bicep template: `infra/bicep/monitoring.bicep`
+## Development Setup
+1. Copy `.env.example` to `.env` and fill in real credentials.
+2. Run `docker compose up --build` to start API and PostgreSQL.
 
-- Copy `.env.example` to `.env`.
-- Fill in the real values for the placeholders.
-# Project Skeleton
+## CI/CD Pipeline
+The GitHub Actions workflow builds the Docker image, lints the code, and runs placeholder tests on each push.
 
-## Backend
-- Python 3.11
-- Flask, SQLAlchemy, Pydantic
-
-## Frontend
-- React 18 with TypeScript, Vite
-
-Run `docker-compose up --build` to start services.
+## Placeholder Credentials
+The repo ships with placeholder values (e.g., `<PLACEHOLDER>`). Replace them with actual secrets before deploying.

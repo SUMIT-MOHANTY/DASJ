@@ -1,25 +1,18 @@
-version: "3.9"\n\nservices:\n  backend:\n    build: ./backend\n    container_name: backend\n    env_file:\n      - ./.env.example\n    ports:\n      - "8000:8000"\n    depends_on:\n      - db\n    restart: always\n    networks:\n      - app_net\n\n  db:\n    image: postgres:15-alpine\n    container_name: db\n    restart: always\n    environment:\n      POSTGRES_USER: ${POSTGRES_USER:-placeholder_user}\n      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-placeholder_password}\n      POSTGRES_DB: ${POSTGRES_DB:-app_db}\n    volumes:\n      - postgres_data:/var/lib/postgresql/data\n    networks:\n      - app_net\n    healthcheck:\n      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]\n      interval: 10s\n      timeout: 5s\n      retries: 5\n\nnetworks:\n  app_net:\n    driver: bridge\n\nvolumes:\n  postgres_data:\n
-version: '3.8'
+version: "3.9"
 services:
-  db:
-    image: postgres:15
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: db_name
+  api:
+    build: .
     ports:
-      - '5432:5432'
-  backend:
-    build: ./backend
-    env_file:
-      - .env.example
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/appdb
     depends_on:
       - db
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: appdb
     ports:
-      - '5000:5000'
-  frontend:
-    build: ./frontend
-    ports:
-      - '3000:3000'
-    depends_on:
-      - backend
+      - "5432:5432"

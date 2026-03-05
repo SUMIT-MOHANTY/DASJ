@@ -107,3 +107,12 @@
 - Fix Iterations: `0`
 - Summary: Develop a Dockerfile using a Python base image that copies the backend source code, installs dependencies from requirements.txt, sets placeholder environment variables for DB connection and JWT secret, exposes the API port and defines the entrypoint. NOTE:...
 
+## 2026-03-05T11:42:06Z - Main Task
+- Agent: `agent_06`
+- Task: `Update README with deployment instructions and placeholder credentials note`
+- Task ID: `18587`
+- Branch: `agent/update-readme-with-deployment-instructions-and-placeholder-c-18587`
+- Build Status: `success`
+- Fix Iterations: `1`
+- Summary: Document the steps to push changes, run the CI/CD pipeline, and view the live site. Include a clear note about placeholder credentials and how to replace them with real values when they become available.
+
