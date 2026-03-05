@@ -14,6 +14,9 @@ services:
       - VITE_API_BASE_URL=http://localhost:4000/api
 
       - "3000:3000"
+    env_file: .env.example
+    ports:
+      - '5000:5000'
     depends_on:
       - db
   frontend:
@@ -22,6 +25,7 @@ services:
       - "5173:5173"
     environment:
       - VITE_API_URL=http://localhost:3000
+      - '3000:3000'
     depends_on:
       - backend
   db:
@@ -38,6 +42,9 @@ services:
       POSTGRES_USER: ${DB_USER:-postgres}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
       POSTGRES_DB: ${DB_NAME:-tasksdb}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - '5432:5432'
     volumes:

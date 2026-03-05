@@ -6,8 +6,6 @@
     "moduleResolution": "node",
     "strict": true,
     "jsx": "react-jsx",
-    "sourceMap": true,
-    "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
