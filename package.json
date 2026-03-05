@@ -1,0 +1,7 @@
+{
+  "name": "books-management",
+  "version": "1.0.0",
+  "scripts": {
+    "perf": "node scripts/performance/run-performance.js"
+  }
+}
