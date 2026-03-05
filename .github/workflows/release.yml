@@ -1,0 +1,29 @@
+name: Release Archive
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag (e.g., v1.0-release)'
+        required: false
+        default: v1.0-release
+jobs:
+  create_release_artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Run release script
+        env:
+          ARCHIVE_DIR: ${{ secrets.ARCHIVE_DIR }}
+          VERSION: ${{ github.event.inputs.version }}
+        run: |
+          chmod +x release/tag_and_archive.sh
+          ./release/tag_and_archive.sh
+      - name: Upload archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-archive
+          path: ${{ env.ARCHIVE_DIR }}/*.zip
