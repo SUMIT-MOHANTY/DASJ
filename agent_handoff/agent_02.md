@@ -116,3 +116,12 @@
 - Fix Iterations: `0`
 - Summary: Add a route (e.g., /docs) that serves the Swagger UI generated from the OpenAPI spec. Use placeholder environment variable for docs base URL (DOCS_URL=https://placeholder.docs). NOTE: Placeholder values used pending real deployment configuration.
 
+## 2026-03-05T11:48:30Z - Main Task
+- Agent: `agent_02`
+- Task: `Create robots.txt and sitemap.xml for SEO`
+- Task ID: `18605`
+- Branch: `agent/create-robotstxt-and-sitemapxml-for-seo-18605`
+- Build Status: `success`
+- Fix Iterations: `1`
+- Summary: Add a basic robots.txt file denying all crawlers and generate a simple sitemap.xml that lists the index.html page. Use placeholder URLs and include a note to update with real URLs when the custom domain is provisioned.
+
