@@ -1,0 +1,5 @@
+{
+  "responseHeaders": {
+    "Content-Security-Policy": "default-src 'self';"
+  }
+}
