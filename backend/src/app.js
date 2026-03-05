@@ -1,0 +1,1 @@
+// Existing imports and middleware...\nconst complianceRouter = require('./routes/compliance');\napp.use('/api/compliance', complianceRouter);\n// Existing route registrations...\n
