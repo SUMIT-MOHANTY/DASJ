@@ -1,17 +1,9 @@
-from flask import Flask, jsonify
-from .config import Config
-from .api.routes import api_bp
+from . import create_app, db
 
-def create_app():
-    app = Flask(__name__)
-    app.config.from_object(Config)
-    app.register_blueprint(api_bp, url_prefix='/api/v1')
-    @app.errorhandler(Exception)
-    def handle_error(e):
-        code = getattr(e, 'code', 500)
-        return jsonify({
-            'status': 'error',
-            'error': {'code': code, 'message': str(e), 'details': None},
-            'data': None
-        }), code
-    return app
+app = create_app()
+
+with app.app_context():
+    db.create_all()
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
