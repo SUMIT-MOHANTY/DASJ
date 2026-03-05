@@ -1,8 +1,3 @@
-const express = require('express');
-const tasksRouter = require('./routes/tasks');
-const errorHandler = require('./middlewares/errorHandler');
-const app = express();
-app.use(express.json());
-app.use('/api/tasks', tasksRouter);
-app.use(errorHandler);
-module.exports = app;
+// Existing middleware registrations may be above this line
+const { createOpenAIClient } = require('./services/openaiFactory');
+app.locals.openAIClient = createOpenAIClient();

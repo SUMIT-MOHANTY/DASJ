@@ -75,6 +75,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+  test:
+    runs-on: ubuntu-latest
+    env:
+      USE_MOCK_OPENAI: true
     steps:
       - uses: actions/checkout@v3
       - name: Set up Node.js
@@ -98,3 +102,5 @@ jobs:
       - name: Lock CI to released tag
         if: startsWith(github.ref, 'refs/tags/')
         run: echo "CI locked to tag ${{ github.ref_name }}"
+      - name: Run tests
+        run: npm test
