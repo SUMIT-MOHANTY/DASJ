@@ -68,3 +68,4 @@ A custom **404 Not Found** page has been added to improve user experience for un
 - **Configuration:** Updated `staticwebapp.config.json` (or `azure-storage-config.json`) to include a
   `navigationFallback` entry that rewrites any unmatched request to `404.html`.
 - **Git Tag:** `fallback-404`
+- Post‑Deployment Verification Checklist: [docs/POST_DEPLOYMENT_CHECKLIST.md](docs/POST_DEPLOYMENT_CHECKLIST.md)
