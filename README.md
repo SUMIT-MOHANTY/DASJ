@@ -1,3 +1,10 @@
-# Azure Static Web Apps Boilerplate
-React frontend + Node Azure‑Functions backend.
-Populate the placeholder env vars before deployment.
+# Project Skeleton
+
+## Backend
+- Python 3.11
+- Flask, SQLAlchemy, Pydantic
+
+## Frontend
+- React 18 with TypeScript, Vite
+
+Run `docker-compose up --build` to start services.
