@@ -2,24 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { fetchTasks, createTask, updateTask, deleteTask } from '../api/tasks';
 import { Task } from '../models/Task';
 const TaskList: React.FC = () => {
-    const [tasks, setTasks] = useState<Task[]>([]);
-    const [newTitle, setNewTitle] = useState('');
-    useEffect(() => { fetchTasks().then(res => setTasks(res.data)); }, []);
-    const addTask = () => { createTask({ title: newTitle }).then(res => setTasks([...tasks, res.data])); setNewTitle(''); };
-    const toggle = (task: Task) => { updateTask(task.id, { completed: !task.completed }).then(res => setTasks(tasks.map(t => t.id===task.id?res.data:t))); };
-    const remove = (id: number) => { deleteTask(id).then(()=> setTasks(tasks.filter(t=>t.id!==id))); };
-    return (
-        <div>
-            <h1>Tasks</h1>
-            <input value={newTitle} onChange={e=>setNewTitle(e.target.value)} placeholder='New task' />
-            <button onClick={addTask}>Add</button>
-            <ul>{tasks.map(task=> (
-                <li key={task.id}>
-                    <span style={{textDecoration: task.completed? 'line-through':''}} onClick={()=>toggle(task)}>{task.title}</span>
-                    <button onClick={()=>remove(task.id)}>Del</button>
-                </li>
-            ))}</ul>
-        </div>
-    );
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [newTitle, setNewTitle] = useState('');
+  useEffect(() => { fetchTasks().then(r => setTasks(r.data)); }, []);
+  const add = async () => { if (!newTitle) return; const r = await createTask({ title: newTitle }); setTasks([...tasks, r.data]); setNewTitle(''); };
+  const toggle = async (t: Task) => { await updateTask(t.id, { completed: !t.completed }); setTasks(tasks.map(x => x.id===t.id?{...x, completed:!x.completed}:x)); };
+  const remove = async (id: string) => { await deleteTask(id); setTasks(tasks.filter(x=>x.id!==id)); };
+  return (
+    <div>
+      <input value={newTitle} onChange={e=>setNewTitle(e.target.value)} placeholder="New task" />
+      <button onClick={add}>Add</button>
+      <ul>
+        {tasks.map(t=> (
+          <li key={t.id} style={{textDecoration: t.completed? 'line-through':''}}>
+            <span onClick={()=>toggle(t)}>{t.title}</span>
+            <button onClick={()=>remove(t.id)}>X</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 export default TaskList;
