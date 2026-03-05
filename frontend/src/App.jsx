@@ -1,0 +1,1 @@
+import React, { useEffect, useState } from 'react'\nfunction App() {\n  const [health, setHealth] = useState(null)\n  useEffect(() => {\n    fetch('http://localhost:8000/health')\n      .then(r => r.json())\n      .then(d => setHealth(d.status))\n      .catch(() => setHealth('unreachable'))\n  }, [])\n  return (<div><h1>API Health: {health}</h1></div>)\n}\nexport default App\n

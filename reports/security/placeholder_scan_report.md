@@ -1,0 +1,1 @@
+# Placeholder Scan Report\n\nThis file will be overwritten by the analysis step. Real findings will appear after a scan is executed.\n
