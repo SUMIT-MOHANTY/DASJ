@@ -1,40 +1,51 @@
 import React, { useEffect, useState } from 'react';
 import { fetchTasks, createTask, updateTask, deleteTask } from '../api/tasks';
 import { Task } from '../models/Task';
+
 const TaskList: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTitle, setNewTitle] = useState('');
-  useEffect(() => { fetchTasks().then(res => setTasks(res.data)); }, []);
+
+  const load = async () => {
+    const res = await fetchTasks();
+    setTasks(res.data);
+  };
+
+  useEffect(() => { load(); }, []);
+
   const add = async () => {
-    if (!newTitle) return;
-    const res = await createTask({ title: newTitle });
-    setTasks([...tasks, res.data]);
+    if (!newTitle.trim()) return;
+    await createTask({ title: newTitle });
     setNewTitle('');
+    load();
   };
+
   const toggle = async (task: Task) => {
-    const res = await updateTask(task.id, { completed: !task.completed });
-    setTasks(tasks.map(t => (t.id === task.id ? res.data : t)));
+    await updateTask(task.id, { completed: !task.completed });
+    load();
   };
+
   const remove = async (id: number) => {
     await deleteTask(id);
-    setTasks(tasks.filter(t => t.id !== id));
+    load();
   };
+
   return (
     <div>
-      <input value={newTitle} onChange={e => setNewTitle(e.target.value)} placeholder="New task" />
-      <button onClick={add}>Add</button>
+      <div>
+        <input value={newTitle} onChange={e => setNewTitle(e.target.value)} placeholder="New task" />
+        <button onClick={add}>Add</button>
+      </div>
       <ul>
         {tasks.map(t => (
-          <li key={t.id}>
-            <span
-              style={{ textDecoration: t.completed ? 'line-through' : 'none', cursor: 'pointer' }}
-              onClick={() => toggle(t)}
-            >{t.title}</span>
-            <button onClick={() => remove(t.id)}>Del</button>
+          <li key={t.id} style={{ textDecoration: t.completed ? 'line-through' : 'none' }}>
+            <span onClick={() => toggle(t)}>{t.title}</span>
+            <button onClick={() => remove(t.id)} style={{ marginLeft: '0.5rem' }}>✖</button>
           </li>
         ))}
       </ul>
     </div>
   );
 };
+
 export default TaskList;

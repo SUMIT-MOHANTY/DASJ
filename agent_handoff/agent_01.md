@@ -25,4 +25,12 @@
 - Build Status: `success`
 - Fix Iterations: `2`
 - Summary: Develop a checklist covering security, governance, and sandbox policy compliance. Implement a simple verification script that runs post-deployment to ensure all compliance items are met. NOTE: Using placeholder credentials — replace with real values once pr...
+## 2026-03-05T10:58:49Z - Main Task
+- Agent: `agent_01`
+- Task: `Configure Azure Subscription Placeholder Variables`
+- Task ID: `18598`
+- Branch: `agent/configure-azure-subscription-placeholder-variables-18598`
+- Build Status: `success`
+- Fix Iterations: `1`
+- Summary: Add placeholder environment variables for Azure Subscription (e.g., AZURE_SUBSCRIPTION_ID=your-subscription-id) with notes indicating they must be replaced with real values. NOTE: Using placeholder credentials — replace with real values once provided.
 

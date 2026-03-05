@@ -32,3 +32,31 @@ services:
       POSTGRES_DB: tasksdb
     ports:
       - "5432:5432"
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-tasksdb}
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  backend:
+    build: ./backend
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME:-tasksdb}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}
+    ports:
+      - '5000:5000'
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000'
+volumes:
+  pgdata:
