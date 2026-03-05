@@ -1,0 +1,17 @@
+{
+  "name": "backend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "npm run lint && npm test",
+    "lint": "eslint .",
+    "test": "jest --ci"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0"
+  }
+}
