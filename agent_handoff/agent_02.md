@@ -41,4 +41,12 @@
 - Build Status: `success`
 - Fix Iterations: `0`
 - Summary: Run end‑to‑end validation against the deployed static site to verify HTTPS is enforced, CDN is serving the page, and page load time is under 200 ms. Log results in the CI pipeline. NOTE: Uses mock performance measurements if real metrics are unavailable.
+## 2026-03-05T10:55:50Z - Main Task
+- Agent: `agent_02`
+- Task: `Implement monitoring and alerting for Azure Static Web App`
+- Task ID: `18594`
+- Branch: `agent/implement-monitoring-and-alerting-for-azure-static-web-app-18594`
+- Build Status: `success`
+- Fix Iterations: `0`
+- Summary: Set up Azure Application Insights and basic alerts (availability, response time) for the deployed static site.
 
