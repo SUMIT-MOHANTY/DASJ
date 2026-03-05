@@ -98,3 +98,12 @@
 - Fix Iterations: `2`
 - Summary: Implement backend endpoints to handle borrowing and returning of books, including transaction history. Use mock payment/notification services where needed.
 
+## 2026-03-05T11:36:05Z - Main Task
+- Agent: `agent_02`
+- Task: `Set Up Automated Backend Monitoring and Alerting (Azure Application Insights placeholder)`
+- Task ID: `18641`
+- Branch: `agent/set-up-automated-backend-monitoring-and-alerting-azure-appli-18641`
+- Build Status: `success`
+- Fix Iterations: `3`
+- Summary: Configure Azure Application Insights for the API services, define alerts for error rate >5% and latency >200 ms. Use placeholder instrumentation key (APP_INSIGHTS_KEY=your-key-here). NOTE: Placeholder key – replace with real instrumentation key after sandbo...
+

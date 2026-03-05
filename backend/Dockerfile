@@ -1,6 +1,7 @@
 FROM python:3.11-slim
 WORKDIR /app
-COPY . .
+COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-EXPOSE 5000
-CMD ["gunicorn", "backend.app:create_app()", "-b", "0.0.0.0:5000"]
+COPY backend/ .
+ENV APP_INSIGHTS_KEY=your-key-here
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
