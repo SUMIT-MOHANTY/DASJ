@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "htmlhint": "^0.14.2",
+    "@axe-core/github-action": "^1.0.0"
+  },
+  "scripts": {
+    "lint:html": "htmlhint \"./frontend/**/*.html\""
+  }
+}
