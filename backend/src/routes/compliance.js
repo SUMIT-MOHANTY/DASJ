@@ -1,0 +1,1 @@
+const express = require('express');\nconst router = express.Router();\nconst complianceController = require('../controllers/complianceController');\nrouter.post('/', complianceController.createPackage);\nmodule.exports = router;\n
