@@ -1,0 +1,24 @@
+name: Load Test
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  load-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install k6
+        run: npm install -g k6
+
+      - name: Run load test
+        env:
+          STATIC_SITE_URL: ${{ secrets.STATIC_SITE_URL }}
+        run: k6 run load_test/k6_test.js
