@@ -1,5 +1,7 @@
 name: Deploy to Azure Static Web Apps\n\non:\n  push:\n    branches: [main]\n\njobs:\n  build_and_deploy:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - name: Checkout repository\n        uses: actions/checkout@v3\n        with:\n          fetch-depth: 0\n      - name: Set up Node.js\n        uses: actions/setup-node@v3\n        with:\n          node-version: '18'\n      - name: Install frontend dependencies\n        working-directory: ./frontend\n        run: npm ci\n      - name: Build React app\n        working-directory: ./frontend\n        run: npm run build\n      - name: Azure Login\n        uses: azure/login@v1\n        with:\n          creds: ${{{{ secrets.AZURE_CREDENTIALS }}}}\n      - name: Deploy to Azure Static Web Apps\n        uses: Azure/static-web-apps-deploy@v1\n        with:\n          azure_static_web_apps_api_token: ${{{{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}}}\n          repo_token: ${{{{ secrets.GITHUB_TOKEN }}}}\n          action: "upload"\n          app_location: "frontend"\n          output_location: "dist"\n          skip_app_build: true\n
 name: Deploy to Azure Static Web Apps
+name: CI/CD - Build & Deploy to Azure
+
 on:
   push:
     branches: [ main ]
@@ -68,3 +70,67 @@ jobs:
           output_location: ''
           skip_app_build: true
 name: Deploy to Azure Static Web Apps\non:\n  push:\n    branches: [ main ]\njobs:\n  build_and_deploy:\n    runs-on: ubuntu-latest\n    env:\n      AZURE_SUBSCRIPTION_ID: your-subscription-id\n      AZURE_RESOURCE_GROUP: your-resource-group\n      AZURE_STATIC_WEB_APP_NAME: your-static-web-app-name\n      AZURE_CREDS: your-azure-credentials-json\n    steps:\n      - name: Checkout repository\n        uses: actions/checkout@v3\n      - name: Setup Node\n        uses: actions/setup-node@v3\n        with:\n          node-version: '20.x'\n      - name: Install Frontend Dependencies\n        run: npm ci\n        working-directory: frontend\n      - name: Build Frontend\n        run: npm run build --prefix frontend\n      - name: Copy Static Assets\n        run: cp -R frontend/public/* frontend/dist/\n      - name: Deploy to Azure Static Web Apps\n        uses: Azure/static-web-apps-deploy@v1\n        with:\n          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}\n          repo_token: ${{ secrets.GITHUB_TOKEN }}\n          action: "upload"\n          subscription_id: ${{ env.AZURE_SUBSCRIPTION_ID }}\n          resource_group: ${{ env.AZURE_RESOURCE_GROUP }}\n          name: ${{ env.AZURE_STATIC_WEB_APP_NAME }}\n          app_location: "frontend"\n          output_location: "frontend/dist"\n
+env:
+  IMAGE_NAME: task-manager
+  ACR_NAME: ${{ secrets.ACR_NAME }}
+  RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
+  WEBAPP_NAME: ${{ secrets.WEBAPP_NAME }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Log in to Azure Container Registry
+        run: |
+          az acr login --name ${{ env.ACR_NAME }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Deploy to Azure Web App for Containers
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.WEBAPP_NAME }}
+          slot-name: production
+          images: ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Rollback on failure
+        if: failure()
+        run: |
+          echo "Deployment failed - attempting rollback to previous image"
+          # Retrieve the previously deployed tag (placeholder logic)
+          PREV_TAG=$(az webapp config container show --name ${{ env.WEBAPP_NAME }} --resource-group ${{ env.RESOURCE_GROUP }} --query 'latestImage' -o tsv | awk -F':' '{print $2}')
+          if [ -n "$PREV_TAG" ]; then
+            echo "Rolling back to $PREV_TAG"
+            az webapp config container set --name ${{ env.WEBAPP_NAME }} --resource-group ${{ env.RESOURCE_GROUP }} \
+              --docker-custom-image-name ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:$PREV_TAG
+          else
+            echo "No previous image tag found - manual intervention required"
+          fi
