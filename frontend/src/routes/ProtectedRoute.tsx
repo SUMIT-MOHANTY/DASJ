@@ -1,0 +1,1 @@
+import React from 'react';\nimport { Navigate, Outlet } from 'react-router-dom';\nimport { useAuth } from '../context/AuthContext';\n\nconst ProtectedRoute: React.FC = () => {\n  const { token } = useAuth();\n  return token ? <Outlet /> : <Navigate to="/login" replace />;\n};\n\nexport default ProtectedRoute;\n
