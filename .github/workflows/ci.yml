@@ -1,0 +1,42 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: testdb
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Backend install & test
+        working-directory: ./backend
+        run: |
+          npm ci
+      - name: Frontend install & build
+        working-directory: ./frontend
+        run: |
+          npm ci
+          npm run build
+      - name: Docker Compose up
+        run: docker compose up -d --build
+      - name: Verify static page
+        run: |
+          sleep 10
+          curl -sSf http://localhost | grep 'Hi sumit'
+      - name: Tear down
+        if: always()
+        run: docker compose down
