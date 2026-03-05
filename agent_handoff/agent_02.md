@@ -148,4 +148,12 @@
 - Build Status: `success`
 - Fix Iterations: `0`
 - Summary: Execute a final performance profiling run (using Lighthouse or WebPageTest) against the deployed page, aiming for <200 ms load time. Generate a report and store it in the repository. NOTE: Uses placeholder testing URLs until the final domain is set.
+## 2026-03-05T12:06:27Z - Main Task
+- Agent: `agent_02`
+- Task: `Run automated accessibility regression test using axe-core in CI pipeline`
+- Task ID: `18627`
+- Branch: `agent/run-automated-accessibility-regression-test-using-axe-core-i-18627`
+- Build Status: `success`
+- Fix Iterations: `2`
+- Summary: Integrate axe-core accessibility testing into the GitHub Actions workflow to automatically fail builds if WCAG violations are detected.
 
