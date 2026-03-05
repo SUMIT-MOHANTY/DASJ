@@ -74,3 +74,12 @@
 - Fix Iterations: `0`
 - Summary: Create RESTful endpoints for creating, reading, updating, and deleting book records. Protect endpoints with JWT auth. NOTE: Use placeholder DB connection string (DATABASE_URL=sqlite:///books.db).
 
+## 2026-03-05T11:26:23Z - Main Task
+- Agent: `agent_05`
+- Task: `Add DNS Configuration Task for Custom Domain (Optional)`
+- Task ID: `18581`
+- Branch: `agent/add-dns-configuration-task-for-custom-domain-optional-18581`
+- Build Status: `success`
+- Fix Iterations: `1`
+- Summary: Document the steps required to configure a custom domain and DNS records for the Azure Static Web App. Include placeholder DNS zone name and instructions for updating DNS once a domain is provisioned.
+
