@@ -1,7 +1,7 @@
+const http = require('http');
 const app = require('./app');
-const { sequelize } = require('./config/database');
-const PORT = process.env.PORT || 5000;
-sequelize.sync().then(() => {
-  console.log('Database synced');
-  app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+const PORT = process.env.PORT || 3000;
+// In production, TLS termination is handled by Azure Front Door / Azure App Service.
+http.createServer(app).listen(PORT, () => {
+  console.log(`Server listening on http://localhost:${PORT}`);
 });

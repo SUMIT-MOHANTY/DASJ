@@ -1,13 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import TaskList from './components/TaskList';
-
 const App: React.FC = () => (
-  <Router>
-    <Routes>
-      <Route path='/' element={<TaskList />} />
-    </Routes>
-  </Router>
+  <div style={{fontFamily: 'Arial, sans-serif', padding: '2rem'}}>
+    <h1>Hi sumit</h1>
+  </div>
 );
-
 export default App;
