@@ -1,0 +1,1 @@
+{\n  "name": "ci-validation",\n  "version": "1.0.0",\n  "private": true,\n  "scripts": {\n    "validate": "node scripts/validate_prod.js"\n  },\n  "devDependencies": {\n    "node-fetch": "^3.3.0",\n    "lighthouse": "^11.6.0",\n    "webpagetest-cli": "^5.3.0"\n  }\n}\n
