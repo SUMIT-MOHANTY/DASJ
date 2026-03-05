@@ -56,3 +56,15 @@ chmod +x scripts/deploy-rg.sh   # make the script executable
 - The script is deliberately strict (`set -euo pipefail`) to stop on any unexpected error.
 - Remember to keep your `.env` file out of version control. See `.gitignore` in the `ci/` folder.
 - After reviewing, you may want to add this script to your CI/CD pipeline for automated provisioning.
+# Books Management
+
+
+## Fallback Routing
+
+A custom **404 Not Found** page has been added to improve user experience for unknown routes.
+
+- **File:** `404.html` - Friendly HTML page with branding "Books Management - Page Not Found".
+- **CSS:** `css/404.css` - Minimal styling for a centered, readable layout.
+- **Configuration:** Updated `staticwebapp.config.json` (or `azure-storage-config.json`) to include a
+  `navigationFallback` entry that rewrites any unmatched request to `404.html`.
+- **Git Tag:** `fallback-404`
