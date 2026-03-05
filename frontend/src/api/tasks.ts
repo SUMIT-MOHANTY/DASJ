@@ -1,6 +1,7 @@
 import axios from 'axios';
-const api = axios.create({ baseURL: '/api' });
-export const fetchTasks = () => api.get('/tasks');
-export const createTask = (data: any) => api.post('/tasks', data);
-export const updateTask = (id: string, data: any) => api.put(`/tasks/${id}`, data);
-export const deleteTask = (id: string) => api.delete(`/tasks/${id}`);
+import { Task } from '../models/Task';
+const base = '/api/tasks';
+export const getTasks = () => axios.get<Task[]>(base).then(r => r.data);
+export const createTask = (task: Omit<Task, 'id'>) => axios.post<Task>(base, task).then(r => r.data);
+export const updateTask = (id: number, task: Partial<Task>) => axios.put<Task>(`${base}/${id}`, task).then(r => r.data);
+export const deleteTask = (id: number) => axios.delete(`${base}/${id}`);
