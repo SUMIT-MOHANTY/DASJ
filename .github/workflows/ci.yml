@@ -1,0 +1,25 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with: { node-version: '18' }
+      - name: Install backend deps
+        working-directory: backend
+        run: npm ci
+      - name: Install frontend deps
+        working-directory: frontend
+        run: npm ci
+      - name: Run backend tests (placeholder)
+        working-directory: backend
+        run: echo "no tests"
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+      - name: Lock CI to released tag
+        if: startsWith(github.ref, 'refs/tags/')
+        run: echo "CI locked to tag ${{ github.ref_name }}"
