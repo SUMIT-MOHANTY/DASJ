@@ -1,1 +1,69 @@
 name: Deploy to Azure Static Web Apps\n\non:\n  push:\n    branches: [main]\n\njobs:\n  build_and_deploy:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      id-token: write\n    steps:\n      - name: Checkout repository\n        uses: actions/checkout@v3\n        with:\n          fetch-depth: 0\n      - name: Set up Node.js\n        uses: actions/setup-node@v3\n        with:\n          node-version: '18'\n      - name: Install frontend dependencies\n        working-directory: ./frontend\n        run: npm ci\n      - name: Build React app\n        working-directory: ./frontend\n        run: npm run build\n      - name: Azure Login\n        uses: azure/login@v1\n        with:\n          creds: ${{{{ secrets.AZURE_CREDENTIALS }}}}\n      - name: Deploy to Azure Static Web Apps\n        uses: Azure/static-web-apps-deploy@v1\n        with:\n          azure_static_web_apps_api_token: ${{{{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}}}\n          repo_token: ${{{{ secrets.GITHUB_TOKEN }}}}\n          action: "upload"\n          app_location: "frontend"\n          output_location: "dist"\n          skip_app_build: true\n
+name: Deploy to Azure Static Web Apps
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Build static site
+        working-directory: ./frontend
+        run: npm run build
+
+      # -----------------------------------------------------------
+      #  Verify that placeholder credentials have been replaced.
+      # -----------------------------------------------------------
+      - name: Check Azure credentials placeholders
+        env:
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        run: |
+          ./backend/scripts/check-placeholder.sh
+
+      - name: Install Azure CLI
+        uses: azure/CLI@v1
+
+      - name: Azure login (service principal)
+        env:
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        run: |
+          az login --service-principal -u "$AZURE_CLIENT_ID" -p "$AZURE_CLIENT_SECRET" --tenant "$AZURE_TENANT_ID"
+
+      - name: Run Azure deployment script (Task 12)
+        env:
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        run: |
+          chmod +x ./backend/scripts/azure-deploy.sh
+          ./backend/scripts/azure-deploy.sh
+
+      - name: Deploy built site to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: 'upload'
+          app_location: './frontend/dist'
+          output_location: ''
+          skip_app_build: true
