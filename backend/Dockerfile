@@ -1,7 +1,7 @@
-FROM node:18-alpine
+FROM python:3.11-slim
 WORKDIR /app
-COPY package*.json ./
-RUN npm install --production
-COPY . .
-EXPOSE 3000
-CMD ["node", "src/index.js"]
+COPY backend/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY backend/ .
+ENV APP_INSIGHTS_KEY=your-key-here
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
