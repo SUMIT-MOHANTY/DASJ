@@ -83,3 +83,12 @@
 - Fix Iterations: `0`
 - Summary: Create a clean, production‑ready project skeleton for both backend and frontend. Includes: - `backend/` with virtualenv, `requirements.txt`, `config.py`, entry point (`app.py`), and API module layout. - `frontend/` with `package.json`, Vite/React configurat...
 
+## 2026-03-05T11:47:30Z - Main Task
+- Agent: `agent_01`
+- Task: `Add Content Security Policy headers to static site`
+- Task ID: `18604`
+- Branch: `agent/add-content-security-policy-headers-to-static-site-18604`
+- Build Status: `success`
+- Fix Iterations: `1`
+- Summary: Configure Content Security Policy (CSP) headers for the static HTML page via Azure Static Web Apps settings. Use placeholder CSP directives (e.g., default-src 'self';) and note to update with the final policy later.
+
