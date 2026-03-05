@@ -1,17 +1,8 @@
-# Multi‑stage Dockerfile for the full stack (frontend + backend)
-FROM node:18-alpine AS build
+FROM python:3.10-slim
 WORKDIR /app
-COPY frontend/package*.json ./
-RUN npm ci
-COPY frontend/ .
-RUN npm run build
-
-FROM node:18-alpine AS runtime
-WORKDIR /app
-COPY backend/package*.json ./
-RUN npm ci --production
-COPY backend/ .
-COPY --from=build /app/frontend/dist ./frontend/dist
-EXPOSE 3000
-ENV NODE_ENV=production
-CMD ["node", "src/index.js"]
+COPY backend/ /app/
+RUN pip install --no-cache-dir -r requirements.txt
+ENV DB_URL=postgresql://user:password@localhost:5432/dbname
+ENV JWT_SECRET=ReplaceWithSecureSecret
+EXPOSE 8000
+ENTRYPOINT ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
