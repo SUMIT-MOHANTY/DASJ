@@ -1,0 +1,1 @@
+# Compliance Package\n\nThis directory will contain compiled compliance artifacts after packaging.\nLocate the generated folder under `compliance_package/<timestamp>/`.\nThe folder includes an `INDEX.md` listing artifacts, a `SIGN_OFF_CHECKLIST.md` for stakeholder signatures,\nand a `README.md` with next‑step guidance for the internal review meeting.\n

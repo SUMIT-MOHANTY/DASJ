@@ -1,0 +1,21 @@
+alerts:
+  - name: "HighErrorRate"
+    description: "Error rate > 5% over 5 minutes"
+    condition:
+      metricName: "requests/count"
+      dimensions:
+        - "resultCode"
+      threshold: 0.05
+      operator: "GreaterThan"
+      aggregation: "Percentage"
+    period: "PT5M"
+    severity: 2
+  - name: "HighLatency"
+    description: "Average latency > 200ms over 5 minutes"
+    condition:
+      metricName: "requests/duration"
+      threshold: 200
+      operator: "GreaterThan"
+      aggregation: "Average"
+    period: "PT5M"
+    severity: 2
