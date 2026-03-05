@@ -91,4 +91,12 @@
 - Build Status: `success`
 - Fix Iterations: `1`
 - Summary: Configure Content Security Policy (CSP) headers for the static HTML page via Azure Static Web Apps settings. Use placeholder CSP directives (e.g., default-src 'self';) and note to update with the final policy later.
+## 2026-03-05T11:57:27Z - Main Task
+- Agent: `agent_01`
+- Task: `Conduct performance load test (200 ms target)`
+- Task ID: `18589`
+- Branch: `agent/conduct-performance-load-test-200-ms-target-18589`
+- Build Status: `success`
+- Fix Iterations: `2`
+- Summary: Run load testing against the deployed static site to verify page load times stay under 200 ms on standard broadband. Record results in the project report.
 
