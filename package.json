@@ -16,5 +16,7 @@
   "version": "1.0.0",
   "scripts": {
     "perf": "node scripts/performance/run-performance.js"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   }
 }
