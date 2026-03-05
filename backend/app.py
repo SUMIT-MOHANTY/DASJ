@@ -1,17 +1,14 @@
-from flask import Flask, jsonify
+from flask import Flask
 from .config import Config
-from .api.routes import api_bp
+from .extensions import db, ma, jwt, migrate
+from .api.v1 import api_bp
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
-    app.register_blueprint(api_bp, url_prefix='/api/v1')
-    @app.errorhandler(Exception)
-    def handle_error(e):
-        code = getattr(e, 'code', 500)
-        return jsonify({
-            'status': 'error',
-            'error': {'code': code, 'message': str(e), 'details': None},
-            'data': None
-        }), code
+    db.init_app(app)
+    ma.init_app(app)
+    jwt.init_app(app)
+    migrate.init_app(app, db)
+    app.register_blueprint(api_bp)
     return app

@@ -1,12 +1,7 @@
-from pydantic import BaseModel, EmailStr
+from ..extensions import ma
+from ..models.user import User
 
-class UserBase(BaseModel):
-    email: EmailStr
-
-class UserCreate(UserBase):
-    password: str
-
-class UserRead(UserBase):
-    id: int
-    class Config:
-        orm_mode = True
+class UserSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = User
+        load_instance = True
