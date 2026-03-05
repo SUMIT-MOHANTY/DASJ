@@ -1,11 +1,9 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TaskList from './components/TaskList';
-function App() { return (
-  <BrowserRouter>
-    <Routes>
-      <Route path='/' element={<TaskList />} />
-    </Routes>
-  </BrowserRouter>
-); }
+const App: React.FC = () => (
+  <div>
+    <h1>Task Manager</h1>
+    <TaskList />
+  </div>
+);
 export default App;

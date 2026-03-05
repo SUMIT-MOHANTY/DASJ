@@ -1,14 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { fetchTasks, deleteTask } from '../api/tasks';
-function TaskList() {
-  const [tasks, setTasks] = useState<any[]>([]);
-  useEffect(() => { fetchTasks().then(r => setTasks(r.data)); }, []);
-  const handleDelete = (id:number) => { deleteTask(id).then(() => setTasks(t => t.filter(t => t.id !== id))); };
+import { fetchTasks, createTask, updateTask, deleteTask } from '../api/tasks';
+import { Task } from '../models/Task';
+const TaskList: React.FC = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [newTitle, setNewTitle] = useState('');
+  useEffect(() => { fetchTasks().then(res => setTasks(res.data)); }, []);
+  const add = async () => {
+    if (!newTitle) return;
+    const res = await createTask({ title: newTitle });
+    setTasks([...tasks, res.data]);
+    setNewTitle('');
+  };
+  const toggle = async (task: Task) => {
+    const res = await updateTask(task.id, { completed: !task.completed });
+    setTasks(tasks.map(t => (t.id === task.id ? res.data : t)));
+  };
+  const remove = async (id: number) => {
+    await deleteTask(id);
+    setTasks(tasks.filter(t => t.id !== id));
+  };
   return (
     <div>
-      <h1>Tasks</h1>
-      <ul>{tasks.map(t => (<li key={t.id}>{t.title} <button onClick={()=>handleDelete(t.id)}>Del</button></li>))}</ul>
+      <input value={newTitle} onChange={e => setNewTitle(e.target.value)} placeholder="New task" />
+      <button onClick={add}>Add</button>
+      <ul>
+        {tasks.map(t => (
+          <li key={t.id}>
+            <span
+              style={{ textDecoration: t.completed ? 'line-through' : 'none', cursor: 'pointer' }}
+              onClick={() => toggle(t)}
+            >{t.title}</span>
+            <button onClick={() => remove(t.id)}>Del</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
-}
+};
 export default TaskList;
