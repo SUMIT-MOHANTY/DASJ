@@ -107,3 +107,12 @@
 - Fix Iterations: `3`
 - Summary: Configure Azure Application Insights for the API services, define alerts for error rate >5% and latency >200 ms. Use placeholder instrumentation key (APP_INSIGHTS_KEY=your-key-here). NOTE: Placeholder key – replace with real instrumentation key after sandbo...
 
+## 2026-03-05T11:41:22Z - Main Task
+- Agent: `agent_02`
+- Task: `Implement Swagger UI for API Documentation`
+- Task ID: `18639`
+- Branch: `agent/implement-swagger-ui-for-api-documentation-18639`
+- Build Status: `success`
+- Fix Iterations: `0`
+- Summary: Add a route (e.g., /docs) that serves the Swagger UI generated from the OpenAPI spec. Use placeholder environment variable for docs base URL (DOCS_URL=https://placeholder.docs). NOTE: Placeholder values used pending real deployment configuration.
+
