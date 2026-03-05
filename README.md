@@ -1,0 +1,23 @@
+## Environment Setup
+Copy `.env.example` to `.env` and replace the placeholder values with your real Azure credentials.
+Keep `.env` out of version control.
+
+## Monitoring
+
+- [Monitoring Runbook](docs/monitoring_runbook.md)
+- GitHub Actions workflow: `.github/workflows/monitoring.yml`
+- Scripts located in `scripts/monitoring/`
+- Optional Bicep template: `infra/bicep/monitoring.bicep`
+
+- Copy `.env.example` to `.env`.
+- Fill in the real values for the placeholders.
+# Project Skeleton
+
+## Backend
+- Python 3.11
+- Flask, SQLAlchemy, Pydantic
+
+## Frontend
+- React 18 with TypeScript, Vite
+
+Run `docker-compose up --build` to start services.
