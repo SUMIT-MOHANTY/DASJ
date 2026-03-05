@@ -8,3 +8,6 @@ Keep `.env` out of version control.
 - GitHub Actions workflow: `.github/workflows/monitoring.yml`
 - Scripts located in `scripts/monitoring/`
 - Optional Bicep template: `infra/bicep/monitoring.bicep`
+
+- Copy `.env.example` to `.env`.
+- Fill in the real values for the placeholders.
