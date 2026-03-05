@@ -1,8 +1,10 @@
 from fastapi import FastAPI
-from .api import routes_user, routes_auth
+from backend.config import settings
+from backend.routers.health import router as health_router
 
 def create_app() -> FastAPI:
     app = FastAPI()
-    app.include_router(routes_user.router, prefix="/api/v1/users", tags=["users"])
-    app.include_router(routes_auth.router, prefix="/api/v1/auth", tags=["auth"])
+    app.include_router(health_router)
     return app
+
+app = create_app()
