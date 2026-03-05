@@ -1,0 +1,37 @@
+name: Monitoring Setup
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/monitoring/**'
+  workflow_dispatch:
+
+jobs:
+  setup-monitoring:
+    runs-on: ubuntu-latest
+    env:
+      STATIC_WEB_APP_NAME: ${{ secrets.STATIC_WEB_APP_NAME }}
+      RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
+      SANDBOX_SUBSCRIPTION_ID: ${{ secrets.SANDBOX_SUBSCRIPTION_ID }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Azure CLI
+        uses: azure/CLI@v1
+
+      - name: Provision Application Insights
+        run: bash scripts/monitoring/provision_appinsights.sh
+
+      - name: Link App Insights to Static Web App
+        run: bash scripts/monitoring/link_appinsights.sh
+
+      - name: Add App Insights secret to GitHub
+        run: bash scripts/monitoring/add_secret_to_github.sh
+
+      - name: Deploy telemetry code
+        run: bash scripts/monitoring/deploy_telemetry.sh
+
+      - name: Create alert rules
+        run: bash scripts/monitoring/create_alerts.sh
