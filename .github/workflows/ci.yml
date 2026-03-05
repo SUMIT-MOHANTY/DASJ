@@ -1,0 +1,87 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: testdb
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Backend install & test
+        working-directory: ./backend
+        run: |
+          npm ci
+      - name: Frontend install & build
+        working-directory: ./frontend
+        run: |
+          npm ci
+          npm run build
+      - name: Docker Compose up
+        run: docker compose up -d --build
+      - name: Verify static page
+        run: |
+          sleep 10
+          curl -sSf http://localhost | grep 'Hi sumit'
+      - name: Tear down
+        if: always()
+        run: docker compose down
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with: { node-version: '18' }
+      - name: Install backend deps
+        working-directory: backend
+        run: npm ci
+      - name: Install frontend deps
+        working-directory: frontend
+        run: npm ci
+      - name: Run backend unit tests (placeholder)
+        working-directory: backend
+        run: echo "No tests yet"
+      - name: Run frontend build
+        working-directory: frontend
+        run: npm run build
+      - name: OWASP ZAP Scan (placeholder)
+        run: |
+          echo "ZAP scan would run here using provided config files"
+          # Example: docker run -t owasp/zap2docker-stable zap-baseline.py -t http://localhost:3000 -r zap_report.html
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm ci
+        working-directory: frontend
+      - name: Build with App Insights key
+        env:
+          REACT_APP_APPINSIGHTS_KEY: PLACEHOLDER-INSTRUMENTATION-KEY
+        run: npm run build
+        working-directory: frontend
