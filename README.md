@@ -75,3 +75,14 @@ A custom **404 Not Found** page has been added to improve user experience for un
 
 - [Placeholder Credentials Guide](./PLACEHOLDER_CREDENTIALS.md)
 # Books Management Project\n\n## Overview\nThis project provides a simple SPA (React/TypeScript) front‑end and a Flask back‑end offering CRUD endpoints for a `Book` resource.\n\n## Deployment Steps (final)\n1. Build the frontend (placeholder command).\n2. Install Python requirements (see `requirements.txt`).\n3. Run the backend with `python -m backend.run`.\n\n## Azure OpenAI Integration (future)\nCreate the following environment variables before enabling the integration:\n- `AZURE_OPENAI_ENDPOINT` - Azure OpenAI endpoint URL\n- `AZURE_OPENAI_API_KEY` - Access key for the service\n- `AZURE_OPENAI_DEPLOYMENT` - Deployment name for the model\n\nThese placeholders are documented in `backend/config.py`.\n
+# Books Management Project
+
+A simple SPA (React/TypeScript) with a Node.js/Express backend for managing a collection of books.
+
+## Setup
+1. Install dependencies
+2. Run the development server
+
+## Features
+- List, add, edit, delete books
+- Basic SEO tags added to `index.html`
