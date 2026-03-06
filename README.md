@@ -69,3 +69,8 @@ A custom **404 Not Found** page has been added to improve user experience for un
   `navigationFallback` entry that rewrites any unmatched request to `404.html`.
 - **Git Tag:** `fallback-404`
 - Post‑Deployment Verification Checklist: [docs/POST_DEPLOYMENT_CHECKLIST.md](docs/POST_DEPLOYMENT_CHECKLIST.md)
+<!-- Existing README content preserved -->
+
+## Documentation
+
+- [Placeholder Credentials Guide](./PLACEHOLDER_CREDENTIALS.md)
