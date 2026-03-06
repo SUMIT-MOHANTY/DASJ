@@ -17,3 +17,4 @@ WORKDIR /app
 COPY --from=builder /app .
 EXPOSE 3000
 CMD ["node", "src/app.js"]
+FROM python:3.11-slim\nWORKDIR /app\nCOPY . .\nRUN pip install --no-cache-dir -r requirements.txt\nEXPOSE 5000\nCMD ["python", "-m", "backend.run"]\n

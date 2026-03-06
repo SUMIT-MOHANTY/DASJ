@@ -1,11 +1,7 @@
 import React from 'react';
-import BookList from './components/BookList';
-import BookForm from './components/BookForm';
-const App: React.FC = () => (
-  <div style={{padding: '20px'}}>
-    <h1>Books Management</h1>
-    <BookForm />
-    <BookList />
-  </div>
-);
+
+function App() {
+  return <h1>Books Management SPA</h1>;
+}
+
 export default App;
