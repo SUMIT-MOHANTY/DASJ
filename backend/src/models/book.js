@@ -1,26 +1,11 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
-
-const Book = sequelize.define('Book', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-  },
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  author: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  publishedYear: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-  },
-}, {
-  timestamps: true,
+const { EntitySchema } = require('typeorm');
+module.exports = new EntitySchema({
+  name: 'Book',
+  tableName: 'books',
+  columns: {
+    id: { primary: true, type: 'int', generated: true },
+    title: { type: 'varchar', length: 255 },
+    author: { type: 'varchar', length: 255 },
+    publishedYear: { type: 'int', nullable: true }
+  }
 });
-
-module.exports = { Book };

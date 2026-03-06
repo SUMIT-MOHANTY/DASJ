@@ -1,10 +1,9 @@
+require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
-const errorHandler = require('./middlewares/errorHandler');
-const taskRoutes = require('./routes/tasks');
+const booksRouter = require('./routes/books');
 const app = express();
-app.use(cors());
 app.use(express.json());
-app.use('/api/tasks', taskRoutes);
-app.use(errorHandler);
+app.use('/api/books', booksRouter);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`API listening on port ${PORT}`));
 module.exports = app;
