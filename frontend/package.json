@@ -1,19 +1,14 @@
 {
-  "name": "frontend",
+  "name": "books-frontend",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "build": "react-scripts build",
-    "test": "react-scripts test --watchAll=false",
-    "lint": "eslint src"
-  },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "typescript": "^5.2.0"
   },
-  "devDependencies": {
-    "eslint": "^8.0.0",
-    "jest": "^29.0.0",
-    "react-scripts": "5.0.1"
+  "scripts": {
+    "start": "echo 'frontend start placeholder'",
+    "build": "echo 'frontend build placeholder'"
   }
 }
