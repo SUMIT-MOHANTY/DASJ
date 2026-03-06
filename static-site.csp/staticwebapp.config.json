@@ -1,0 +1,11 @@
+{
+  "routes": [
+    {
+      "route": "/*",
+      "serve": "/index.html",
+      "headers": {
+        "Content-Security-Policy": "default-src 'self';"
+      }
+    }
+  ]
+}

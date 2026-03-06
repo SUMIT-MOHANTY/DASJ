@@ -1,0 +1,22 @@
+{
+  "scripts": {
+    "lint": "eslint . --ext .js,.ts,.tsx",
+    "format": "prettier --write .",
+    "prepare": "husky install",
+    "precommit": "lint-staged"
+  },
+  "devDependencies": {
+    "eslint": "latest",
+    "prettier": "latest",
+    "husky": "latest",
+    "lint-staged": "latest",
+    "@typescript-eslint/parser": "latest",
+    "@typescript-eslint/eslint-plugin": "latest"
+  "name": "books-management",
+  "version": "1.0.0",
+  "scripts": {
+    "perf": "node scripts/performance/run-performance.js"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
+  }
+}

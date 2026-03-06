@@ -1,0 +1,1 @@
+- 00:00 Intro & objectives\n- 05:00 Repo overview (frontend/backend)\n- 15:00 CI/CD pipeline walk‑through\n- 25:00 Deployment steps & environment variables\n- 35:00 Q&A\n- 45:00 Next actions & handover summary\n

@@ -1,0 +1,9 @@
+context:
+  name: "Default Context"
+  authentication: false
+  include:
+    - url: "http://localhost:3000/*"
+  exclude: []
+scan:
+  policy: "Default Policy"
+  maxDuration: 300
